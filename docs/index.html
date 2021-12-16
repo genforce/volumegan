@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+
+
+<!-- === Header Starts === -->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <title>VolumeGAN</title>
+
+  <link href="./assets/bootstrap.min.css" rel="stylesheet">
+  <link href="./assets/font.css" rel="stylesheet" type="text/css">
+  <link href="./assets/style.css" rel="stylesheet" type="text/css">
+</head>
+<!-- === Header Ends === -->
+
+
+<body>
+
+
+<!-- === Home Section Starts === -->
+<div class="section">
+  <!-- === Title Starts === -->
+  <div class="header">
+    <div class="logo">
+      <a href="https://genforce.github.io/" target="_blank"><img src="./assets/genforce.png"></a>
+    </div>
+    <div class="title", style="padding-top: 25pt;">  <!-- Set padding as 10 if title is with two lines. -->
+      3D-aware Image Synthesis via Learning Structural and Textural Representations
+    </div>
+  </div>
+  <!-- === Title Ends === -->
+  <div class="author">
+    <a href="https://justimyhxu.github.io" target="_blank">Yinghao Xu</a><sup>1</sup>,&nbsp;
+    <a href="https://pengsida.net" target="_blank">Sida Peng</a><sup>2</sup>,&nbsp;
+    <a href="http://ceyuan.me/" target="_blank">Ceyuan Yang</a><sup>1</sup>,&nbsp;
+    <a href="http://shenyujun.github.io/" target="_blank">Yujun Shen</a><sup>3</sup>,&nbsp;
+    <a href="http://bzhou.ie.cuhk.edu.hk" target="_blank">Bolei Zhou</a><sup>1</sup>
+  </div>
+  <div class="institution">
+    <sup>1</sup> The Chinese University of Hong Kong&nbsp;&nbsp;
+    <sup>2</sup> Zhejiang University&nbsp;&nbsp;
+    <sup>3</sup> ByteDance Inc.<br>
+  </div>
+  <div class="link">
+    <a href="" target="_blank">[Paper]</a>&nbsp;&nbsp;
+    <a href="https://github.com/genforce/VolumegAN" target="_blank">[Code]</a>&nbsp;&nbsp;
+    <a href="https://www.youtube.com/watch?v=p85TVGJBMFc" target="_blank">[Demo]</a>
+
+  </div>
+  <div class="teaser">
+    <img src="./assets/framework.png">
+  </div>
+</div>
+<!-- === Home Section Ends === -->
+
+
+<!-- === Overview Section Starts === -->
+<div class="section">
+  <div class="title">Overview</div>
+  <div class="body">
+    This paper aims at achieving high-fidelity 3D-aware images synthesis.
+    We propose a novel framework, termed as VolumeGAN, for synthesizing images under different camera views, through explicitly learning a structural representation and a textural representation.
+    We first learn a feature volume to represent the underlying structure, which is then converted to a feature field using a NeRF-like model.
+    The feature field is further accumulated into a 2D feature map as the textural representation, followed by a neural renderer for appearance synthesis.
+    Such a design enables independent control of the shape and the appearance.
+    Extensive experiments on a wide range of datasets show that our approach achieves sufficiently higher image quality and better 3D control than the previous methods.
+  </div>
+</div>
+<!-- === Overview Section Ends === -->
+
+
+<!-- === Result Section Starts === -->
+<div class="section">
+  <div class="title">Results</div>
+  <div class="body">
+    Independent control of structure (shape) and texture (appearance) achieved by VolumeGAN.
+
+    <table width="100%" style="margin: 20pt 0; text-align: center;">
+      <tr>
+        <td><img src="./assets/teaser.png" width="80%"></td>
+      </tr>
+    </table>
+
+    Qualitative comparison between our VolumeGAN and existing alternatives.
+
+    <table width="100%" style="margin: 20pt 0; text-align: center;">
+      <tr>
+        <td><img src="./assets/comparison.png" width="95%"></td>
+      </tr>
+    </table>
+  </div>
+</div>
+<!-- === Result Section Ends === -->
+
+
+<!-- === Demo video Section Starts === -->
+<div class="section">
+  <div class="title">Demo</div>
+  <div class="body">
+
+    <p style="margin-top: 20pt"><a name="demo"></a></p>
+    We include a demo video, which shows more results with varying camera views.
+    From the video, we can see the continuous 3D control achieved by our VolumeGAN.
+    <div style="position: relative; padding-top: 50%; margin: 20pt auto; text-align: center;">
+      <iframe src="https://www.youtube.com/embed/p85TVGJBMFc" frameborder=0
+              style="position: absolute; top: 2.5%; left: 2.5%; width: 95%; height: 100%;"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+    </div>
+
+  </div>
+</div>
+<!-- === Demo Video Section Ends === -->
+
+
+<!-- === Reference Section Starts === -->
+<div class="section">
+  <div class="bibtex">BibTeX</div>
+<pre>
+@article{xu2021volumegan,
+  title   = {3D-aware Image Synthesis via Learning Structural and Textural Representations},
+  author  = {Xu, Yinghao and Peng, Sida and Yang, Ceyuan and Shen, Yujun and Zhou, Bolei},
+  article = {arXiv preprint arXiv:},
+  year    = {2021}
+}
+</pre>
+
+  <!-- BZ: we should give other related work enough credits, -->
+  <!--     so please include some most relevant work and leave some comment to summarize work and the difference. -->
+  <div class="ref">Related Work</div>
+
+  <div class="citation">
+    <div class="image"><img src="./assets/hologan.png"></div>
+    <div class="comment">
+      <a href="https://arxiv.org/pdf/1904.01326.pdf" target="_blank">
+        Thu Nguyen-Phuoc, Chuan Li, Lucas Theis, Christian Richardt, Yong-Liang Yang.
+        HoloGAN: Unsupervised learning of 3D representations from natural images.
+        ICCV, 2019.</a><br>
+      <b>Comment:</b>
+      Proposes voxelized and implicit 3D representations and then render it to 2D image space with a reshape operation.
+    </div>
+  </div>
+
+
+  <div class="citation">
+    <div class="image"><img src="./assets/graf.png"></div>
+    <div class="comment">
+      <a href="https://arxiv.org/pdf/2007.02442.pdf" target="_blank">
+        Katja Schwarz, Yiyi Liao, Michael Niemeyer, Andreas Geiger.
+        GRAF: Generative Radiance Fields for 3D-Aware Image Synthesis.
+        NeurIPS, 2020.</a><br>
+      <b>Comment:</b>
+      Proposes the generative radiance fields for 3D-aware image synthesis.
+    </div>
+  </div>
+
+  <div class="citation">
+    <div class="image"><img src="./assets/giraffe.png"></div>
+    <div class="comment">
+      <a href="https://arxiv.org/pdf/2011.12100.pdf" target="_blank">
+        Michael Niemeyer, Andreas Geiger.
+        GIRAFFE: Representing Scenes as Compositional Generative Neural Feature Fields.
+        CVPR, 2021.</a><br>
+      <b>Comment:</b>
+      Proposes the compositional generative neural feature fields for scene synthesis.
+    </div>
+  </div>
+
+  <div class="citation">
+    <div class="image"><img src="./assets/pigan.png"></div>
+    <div class="comment">
+      <a href="https://arxiv.org/pdf/2012.00926.pdf" target="_blank">
+        Eric R. Chan, Marco Monteiro, Petr Kellnhofer, Jiajun Wu, Gordon Wetzstein.
+        pi-GAN: Periodic Implicit Generative Adversarial Networks for 3D-Aware Image Synthesis.
+        CVPR, 2021.</a><br>
+      <b>Comment:</b>
+      Proposes the periodic implicit generative neural feature fields for 3d-aware image synthesis.
+    </div>
+  </div>
+
+</div>
+<!-- === Reference Section Ends === -->
+
+</body>
+</html>
