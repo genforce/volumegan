@@ -6,7 +6,7 @@
 
 ![image](./docs/assets/framework.png)
 
-[[Paper]()]
+[[Paper](https://arxiv.org/abs/2112.10759)]
 [[Project Page](https://genforce.github.io/volumegan/)]
 [[Demo](https://www.youtube.com/watch?v=p85TVGJBMFc)]
 
@@ -30,7 +30,7 @@ Comparison to prior work on various datasets.
 @article{xu2021volumegan,
   title   = {3D-aware Image Synthesis via Learning Structural and Textural Representations},
   author  = {Xu, Yinghao and Peng, Sida and Yang, Ceyuan and Shen, Yujun and Zhou, Bolei},
-  article = {arXiv preprint arXiv:},
+  article = {arXiv preprint arXiv:2112.10759},
   year    = {2021}
 }
 ```
