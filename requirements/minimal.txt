@@ -19,3 +19,7 @@ psutil
 easydict
 lmdb
 matplotlib
+mrcfile
+pymcubes
+trimesh
+einops
