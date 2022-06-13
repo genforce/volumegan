@@ -25,8 +25,8 @@ Make sure your Python >= 3.7, CUDA version >= 10.2, and CUDNN version >= 7.6.5.
    Option 1 (Recommend): Create a virtual environment via `conda`.
 
    ```shell
-   conda create -n hammer python=3.7  # create virtual environment with python 3.7
-   conda activate hammer
+   conda create -n volumegan python=3.7  # create virtual environment with python 3.7
+   conda activate volumegan 
    conda install --yes --file requirements.txt
    ```
 
@@ -109,6 +109,14 @@ where
 - `[OPTIONS]` refers to any additional option to pass. Detailed instructions on available options can be shown via `./scripts/training_demos/volumegan_ffhq256.sh <NUM_GPUS> <PATH_TO_DATA> --help`.
 
 This demo script uses `volumegan_ffhq256` as the default value of `job_name`, which is particularly used to identify experiments. Concretely, a directory with name `job_name` will be created under the root working directory (with is set as `work_dirs/` by default). To prevent overwriting previous experiments, an exception will be raised to interrupt the training if the `job_name` directory has already existed. To change the job name, please use `--job_name=<NEW_JOB_NAME>` option.
+
+#### Quality metrics
+
+We can evaluate the quality metrics of the model after training:
+
+```bash
+PORT=<PORT> ./scripts/test_metrics.sh <NUM_GPUS> <PATH_TO_DATA> <PATH_TO_MODEL> fid, --G_kwargs '{"ps_kwargs":'{"perturb_mode":"none"}'}' [OPTIONS]
+```
 
 ### Prepare Datasets
 
