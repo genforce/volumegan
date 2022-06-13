@@ -336,6 +336,8 @@ def perturb_points(pts, pts_z, ray_dirs, perturb_mode):
     else:
         distance_between_points = pts_z[:, :, :, 1:2, :] - pts_z[:, :, :, 0:1, :]
         offset = (torch.rand(pts_z.shape, device=device) - 0.5) * distance_between_points
+        if perturb_mode == 'none':
+            offset = offset * 0
         pts_z = pts_z + offset
         pts = pts + offset * ray_dirs.unsqueeze(-2)
 
