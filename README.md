@@ -13,114 +13,66 @@
 
 This paper aims at achieving high-fidelity 3D-aware images synthesis. We propose a novel framework, termed as VolumeGAN, for synthesizing images under different camera views, through explicitly learning a structural representation and a textural representation. We first learn a feature volume to represent the underlying structure, which is then converted to a feature field using a NeRF-like model. The feature field is further accumulated into a 2D feature map as the textural representation, followed by a neural renderer for appearance synthesis. Such a design enables independent control of the shape and the appearance. Extensive experiments on a wide range of datasets show that our approach achieves sufficiently higher image quality and better 3D control than the previous methods.
 
-
 ## Usage
 
-### Installation
+### Setup
 
-Make sure your Python >= 3.7, CUDA version >= 10.2, and CUDNN version >= 7.6.5.
-
-1. Install package requirements.
-
-   Option 1 (Recommend): Create a virtual environment via `conda`.
-
-   ```shell
-   conda create -n volumegan python=3.7  # create virtual environment with python 3.7
-   conda activate volumegan 
-   conda install --yes --file requirements.txt
-   ```
-
-   Option 2: Install via `pip3` (or `pip`).
-
-   ```shell
-   pip3 install -r requirements.txt -f https://download.pytorch.org/whl/cu111/torch_stable.html
-   ```
-
-2. To use video visualizer (optional), please also install `ffmpeg`.
-
-   - Ubuntu: `sudo apt-get install ffmpeg`.
-   - MacOS: `brew install ffmpeg`.
-
-3. To reduce memory footprint (optional), you can switch to either `jemalloc` (recommended) or `tcmalloc` rather than your default memory allocator.
-
-   - jemalloc (recommended):
-     - Ubuntu: `sudo apt-get install libjemalloc`
-   - tcmalloc:
-     - Ubuntu: `sudo apt-get install google-perftools`
-
-4. (optional) To speed up data loading on NVIDIA GPUs, you can install [DALI](https://github.com/NVIDIA/DALI), together with [CuPy](https://cupy.dev/) for customized operations if needed:
-
-    ```shell
-    pip3 install --extra-index-url https://developer.download.nvidia.com/compute/redist --upgrade nvidia-dali-<CUDA_VERSION>
-    pip3 install cupy
-    ```
-
-    For example, on CUDA 10.2, DALI can be installed via:
-
-    ```shell
-    pip3 install --extra-index-url https://developer.download.nvidia.com/compute/redist --upgrade nvidia-dali-cuda102
-    pip3 install cupy
-    ```
+This repository is based on [Hammer](https://github.com/bytedance/Hammer), where you can find detailed instructions on environmental setup.
 
 ### Test Demo
-```bash
-python render.py --checkpoint ${MODEL_PATH} --num ${NUM} --work_dir ${WORK_DIR} --seed ${SEED} --render_mode ${RENDER_MODE} --generate_html ${SAVE_HTML} volumegan-ffhq
-```
 
-where 
-
-- `<MODEL_PATH>` refers to the path of the pretrained model.
-
-- `<NUM>` refers the number of the samples to synthesize.
-
-- `<WORK_DIR>` refers the path to save the results.
-
-- `<SEED>` refers the random seed.
-
-- `<RENDER_MODE>` refers the type of the rendered results. We provide two choices: one is `video` and the other is `shape`. 
-
-- `<SAVE_HTML>` refers whether to save images into a html file when rendering videos. The default value is False. 
-
-We provide the following pretrained models for inference.
-
-| Pretrained Models | 
-| :--- | 
-|[FFHQ_256x256](https://www.dropbox.com/s/ygwhufzwi2vb2t8/volumegan_ffhq256.pth?dl=0)|
-
-
-### Train Demo
-
-#### Train VolumeGAN on FFHQ in Resolution of 256x256
-
-In your Terminal, run:
-
-```bash
-PORT=<PORT> ./scripts/training_demos/volumegan_ffhq256.sh <NUM_GPUS> <PATH_TO_DATA> [OPTIONS]
+```shell
+python render.py volumegan-ffhq \
+    --work_dir ${WORK_DIR} \
+    --checkpoint ${MODEL_PATH} \
+    --num ${NUM} \
+    --seed ${SEED} \
+    --render_mode ${RENDER_MODE} \
+    --generate_html ${SAVE_HTML}
 ```
 
 where
 
-- `<PORT>` refers to the communication port for distributed training.
+- `WORK_DIR` refers to the path to save the results.
+- `MODEL_PATH` refers to the path of the pretrained model, regarding which we provide
+  - [FFHQ-256](https://www.dropbox.com/s/ygwhufzwi2vb2t8/volumegan_ffhq256.pth?dl=0)
+- `NUM` refers to the number of samples to synthesize.
+- `SEED` refers to the random seed used for sampling.
+- `RENDER_MODE` refers to the type of the rendered results, including `video` and `shape`.
+- `SAVE_HTML` controls whether to save images as an HTML for better visualization when rendering videos.
 
-- `<NUM_GPUS>` refers to the number of GPUs. Setting `<NUM_GPUS>` as 1 helps launch a training job on single-GPU platforms.
+### Training
 
-- `<PATH_TO_DATA>` refers to the path of FFHQ dataset (in resolution of 256x256) with `zip` format. If running on local machines, a soft link of the data will be created under the `data` folder of the working directory to save disk space.
+For example, users can use the following command to train VolumeGAN on FFHQ in the resolution of 256x256
 
-- `[OPTIONS]` refers to any additional option to pass. Detailed instructions on available options can be shown via `./scripts/training_demos/volumegan_ffhq256.sh <NUM_GPUS> <PATH_TO_DATA> --help`.
-
-This demo script uses `volumegan_ffhq256` as the default value of `job_name`, which is particularly used to identify experiments. Concretely, a directory with name `job_name` will be created under the root working directory (with is set as `work_dirs/` by default). To prevent overwriting previous experiments, an exception will be raised to interrupt the training if the `job_name` directory has already existed. To change the job name, please use `--job_name=<NEW_JOB_NAME>` option.
-
-#### Quality metrics
-
-We can evaluate the quality metrics of the model after training:
-
-```bash
-PORT=<PORT> ./scripts/test_metrics.sh <NUM_GPUS> <PATH_TO_DATA> <PATH_TO_MODEL> fid, --G_kwargs '{"ps_kwargs":'{"perturb_mode":"none"}'}' [OPTIONS]
+```shell
+./scripts/training_demos/volumegan_ffhq256.sh \
+    ${NUM_GPUS} \
+    ${DATA_PATH} \
+    [OPTIONS]
 ```
 
-### Prepare Datasets
+where
 
-See [dataset preparation](./docs/dataset_preparation.md) for details.
+- `NUM_GPUS` refers to the number of GPUs used for training.
+- `DATA_PATH` refers to the path to the dataset (`zip` format is strongly recommended).
+- `[OPTIONS]` refers to any additional option to pass. Detailed instructions on available options can be found via `python train.py volumegan-ffhq --help`.
+
+**NOTE:** This demo script uses `volumegan_ffhq256` as the default `job_name`, which is particularly used to identify experiments. Concretely, a directory with name `job_name` will be created under the root working directory, which is set as `work_dirs/` by default. To prevent overwriting previous experiments, an exception will be raised to interrupt the training if the `job_name` directory has already existed. Please use `--job_name=${JOB_NAME}` option to specify a new job name.
+
+### Evaluation
+
+Users can use the following command to evaluate a well-trained model
+
+```shell
+./scripts/test_metrics.sh \
+    ${NUM_GPUS} \
+    ${DATA_PATH} \
+    ${MODEL_PATH} \
+    fid \
+    --G_kwargs '{"ps_kwargs":'{"perturb_mode":"none"}'}' \
+    [OPTIONS]
+```
 
 ## BibTeX
 
