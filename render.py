@@ -195,7 +195,7 @@ def main(ctx, kwargs, checkpoint, num, batch_size, step, save_raw_synthesis, see
                 yaw = -math.pi/4*(t-1/2) + h_mean
                 fov = default_fov
             else:
-                raise NotImplemenedError
+                raise NotImplementedError
             trajectory.append((pitch, yaw, fov))
 
         code = torch.randn(num, G.z_dim).cuda()

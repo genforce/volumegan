@@ -22,13 +22,14 @@ This repository is based on [Hammer](https://github.com/bytedance/Hammer), where
 ### Test Demo
 
 ```shell
-python render.py volumegan-ffhq \
+python render.py \
     --work_dir ${WORK_DIR} \
     --checkpoint ${MODEL_PATH} \
     --num ${NUM} \
     --seed ${SEED} \
     --render_mode ${RENDER_MODE} \
-    --generate_html ${SAVE_HTML}
+    --generate_html ${SAVE_HTML} \
+    volumegan-ffhq
 ```
 
 where
